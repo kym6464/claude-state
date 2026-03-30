@@ -11,6 +11,7 @@ Claude Code hooks often need to track state across a session (e.g., "only nudge 
 ## Installation
 
 ```bash
+brew tap kym6464/tap
 brew install claude-state
 ```
 
@@ -22,14 +23,14 @@ claude-state [--session-id <id>] <command> <key> [value]
 
 ### Commands
 
-| Command          | Description                          | Exit code              |
-| :--------------- | :----------------------------------- | :--------------------- |
-| `has <key>`      | Check if a key exists                | `0` if set, `1` if not |
-| `get <key>`      | Print the value of a key             | `1` if not set         |
-| `set <key>`      | Set a flag (boolean true)            |                        |
-| `set <key> <value>` | Set a key to a value             |                        |
-| `delete <key>`   | Remove a key                         |                        |
-| `list`           | Print all key-value pairs            |                        |
+| Command           | Description               | Exit code              |
+| ----------------- | ------------------------- | ---------------------- |
+| has <key>         | Check if a key exists     | `0` if set, `1` if not |
+| get <key>         | Print the value of a key  | `1` if not set         |
+| set <key>         | Set a flag (boolean true) |                        |
+| set <key> <value> | Set a key to a value      |                        |
+| delete <key>      | Remove a key              |                        |
+| list              | Print all key-value pairs |                        |
 
 ### Session ID
 
