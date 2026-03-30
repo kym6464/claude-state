@@ -14,6 +14,18 @@ Claude Code hooks often need to track state across a session (e.g., "only nudge 
 brew install kym6464/tap/claude-state
 ```
 
+Or via NPM:
+
+```bash
+npm install -g @kym6464/claude-state
+```
+
+Then invoke it to make sure it works:
+
+```bash
+claude-state --help
+```
+
 ## Usage
 
 ```
