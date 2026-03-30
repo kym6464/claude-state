@@ -1,0 +1,25 @@
+name: Publish to Homebrew
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  homebrew-releaser:
+    runs-on: ubuntu-latest
+    name: homebrew-releaser
+    steps:
+      - name: Release project to Homebrew tap
+        uses: Justintime50/homebrew-releaser@v3
+        with:
+          homebrew_owner: kym6464
+          homebrew_tap: homebrew-tap
+          github_token: ${{ secrets.HOMEBREW_PAT }}
+          version: ${{ github.event.release.tag_name }}
+          install: 'bin.install "claude-state"'
+          depends_on: jq
+          target_darwin_amd64: true
+          target_darwin_arm64: true
+          target_linux_amd64: true
+          target_linux_arm64: true

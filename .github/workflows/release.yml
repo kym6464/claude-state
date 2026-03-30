@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version bump
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version
+        id: bump
+        run: |
+          OLD=$(cat VERSION | tr -d '[:space:]')
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$OLD"
+          case "${{ inputs.bump }}" in
+            major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
+            minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
+            patch) PATCH=$((PATCH + 1)) ;;
+          esac
+          NEW="${MAJOR}.${MINOR}.${PATCH}"
+          echo "$NEW" > VERSION
+          git add VERSION
+          git commit -m "v${NEW}"
+          git tag "v${NEW}"
+          echo "tag=v${NEW}" >> "$GITHUB_OUTPUT"
+          echo "version=${NEW}" >> "$GITHUB_OUTPUT"
+
+      - name: Push
+        run: git push --follow-tags
+
+      - name: Package
+        run: |
+          VERSION="${{ steps.bump.outputs.version }}"
+          mkdir -p dist
+          cp cli.sh claude-state
+          chmod +x claude-state
+          for TARGET in darwin-arm64 darwin-amd64 linux-arm64 linux-amd64; do
+            tar czf "dist/claude-state-${VERSION}-${TARGET}.tar.gz" claude-state
+          done
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ secrets.HOMEBREW_PAT }}
+          GH_REPO: ${{ github.repository }}
+        run: gh release create "${{ steps.bump.outputs.tag }}" dist/* --title "${{ steps.bump.outputs.tag }}" --generate-notes
