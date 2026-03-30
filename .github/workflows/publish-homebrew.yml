@@ -18,7 +18,8 @@ jobs:
           github_token: ${{ secrets.HOMEBREW_PAT }}
           version: ${{ github.event.release.tag_name }}
           install: 'bin.install "claude-state"'
-          depends_on: jq
+          depends_on: |-
+            "jq"
           target_darwin_amd64: true
           target_darwin_arm64: true
           target_linux_amd64: true
