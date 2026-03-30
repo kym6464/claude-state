@@ -1,0 +1,21 @@
+{
+  "name": "@kym6464/claude-state",
+  "version": "0.1.2",
+  "description": "A lightweight CLI for managing session-scoped state in Claude Code hooks",
+  "bin": "cli.sh",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kym6464/claude-state.git"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "hooks",
+    "state"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kym6464/claude-state/issues"
+  },
+  "homepage": "https://github.com/kym6464/claude-state#readme"
+}

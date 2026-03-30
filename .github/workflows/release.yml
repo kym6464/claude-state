@@ -38,7 +38,8 @@ jobs:
           esac
           NEW="${MAJOR}.${MINOR}.${PATCH}"
           echo "$NEW" > VERSION
-          git add VERSION
+          npm version "$NEW" --no-git-tag-version --allow-same-version
+          git add VERSION package.json
           git commit -m "v${NEW}"
           git tag "v${NEW}"
           echo "tag=v${NEW}" >> "$GITHUB_OUTPUT"
