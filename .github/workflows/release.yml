@@ -45,7 +45,9 @@ jobs:
           echo "version=${NEW}" >> "$GITHUB_OUTPUT"
 
       - name: Push
-        run: git push --follow-tags
+        run: |
+          git push
+          git push origin "${{ steps.bump.outputs.tag }}"
 
       - name: Package
         run: |
