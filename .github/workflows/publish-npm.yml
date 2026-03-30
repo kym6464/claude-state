@@ -14,12 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.release.tag_name }}
 
       - uses: actions/setup-node@v4
         with:
           registry-url: 'https://registry.npmjs.org'
           node-version: '22.x'
 
-      - run: npm publish --access public --provenance
+      - run: npm publish --access public
