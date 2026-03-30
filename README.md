@@ -11,8 +11,7 @@ Claude Code hooks often need to track state across a session (e.g., "only nudge 
 ## Installation
 
 ```bash
-brew tap kym6464/tap
-brew install claude-state
+brew install kym6464/tap/claude-state
 ```
 
 ## Usage
